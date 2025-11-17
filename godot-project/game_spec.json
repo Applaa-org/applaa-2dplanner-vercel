@@ -1,0 +1,247 @@
+{
+  "game": {
+    "name": "Leap & Loot",
+    "type": "2D",
+    "description": "A fast-paced 2D platformer where a nimble hero jumps across floating platforms, collects shimmering coins, and stomps or shoots enemies to reach the golden portal at the end of each level.",
+    "genre": "platformer",
+    "version": "1.0.0"
+  },
+  "settings": {
+    "window": {
+      "width": 1280,
+      "height": 720,
+      "resizable": true
+    },
+    "physics": {
+      "enabled": true,
+      "gravity": {
+        "x": 0,
+        "y": 980
+      }
+    },
+    "rendering": {}
+  },
+  "scenes": [
+    {
+      "name": "Main",
+      "type": "2D",
+      "path": "res://scenes/Main.tscn",
+      "nodes": [
+        {
+          "name": "Root",
+          "type": "Node2D",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "children": [
+            {
+              "name": "Hero",
+              "type": "CharacterBody2D",
+              "position": {
+                "x": 100,
+                "y": 300,
+                "z": 0
+              },
+              "children": [
+                {
+                  "name": "Sprite2D",
+                  "type": "Sprite2D",
+                  "position": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "properties": {
+                    "texture": ""
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Camera",
+              "type": "Camera2D",
+              "position": {
+                "x": 0,
+                "y": 0,
+                "z": 5
+              },
+              "properties": {}
+            },
+            {
+              "name": "Slime",
+              "type": "CharacterBody2D",
+              "position": {
+                "x": 300,
+                "y": 300,
+                "z": 0
+              },
+              "children": [
+                {
+                  "name": "Sprite2D",
+                  "type": "Sprite2D",
+                  "position": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "properties": {
+                    "texture": ""
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Bat",
+              "type": "CharacterBody2D",
+              "position": {
+                "x": 400,
+                "y": 300,
+                "z": 0
+              },
+              "children": [
+                {
+                  "name": "Sprite2D",
+                  "type": "Sprite2D",
+                  "position": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "properties": {
+                    "texture": ""
+                  }
+                }
+              ]
+            },
+            {
+              "name": "Golem",
+              "type": "CharacterBody2D",
+              "position": {
+                "x": 500,
+                "y": 300,
+                "z": 0
+              },
+              "children": [
+                {
+                  "name": "Sprite2D",
+                  "type": "Sprite2D",
+                  "position": {
+                    "x": 0,
+                    "y": 0
+                  },
+                  "properties": {
+                    "texture": ""
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "camera": {
+        "type": "Camera2D",
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        }
+      }
+    }
+  ],
+  "assets": {
+    "sprites": [
+      {
+        "name": "hero",
+        "path": "res://assets/sprites/hero.png",
+        "type": "character"
+      },
+      {
+        "name": "slime",
+        "path": "res://assets/sprites/slime.png",
+        "type": "enemy"
+      },
+      {
+        "name": "bat",
+        "path": "res://assets/sprites/bat.png",
+        "type": "enemy"
+      },
+      {
+        "name": "golem",
+        "path": "res://assets/sprites/golem.png",
+        "type": "enemy"
+      },
+      {
+        "name": "platform",
+        "path": "res://assets/sprites/platform.png",
+        "type": "object"
+      },
+      {
+        "name": "spike",
+        "path": "res://assets/sprites/spike.png",
+        "type": "object"
+      },
+      {
+        "name": "coin",
+        "path": "res://assets/sprites/coin.png",
+        "type": "collectible"
+      },
+      {
+        "name": "portal",
+        "path": "res://assets/sprites/portal.png",
+        "type": "object"
+      },
+      {
+        "name": "bullet",
+        "path": "res://assets/sprites/bullet.png",
+        "type": "effect"
+      }
+    ],
+    "sounds": [
+      {
+        "name": "jump",
+        "path": "res://assets/sounds/jump.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "coin_pickup",
+        "path": "res://assets/sounds/coin_pickup.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "stomp",
+        "path": "res://assets/sounds/stomp.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "shoot",
+        "path": "res://assets/sounds/shoot.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "hit",
+        "path": "res://assets/sounds/hit.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "enemy_die",
+        "path": "res://assets/sounds/enemy_die.wav",
+        "type": "sfx"
+      },
+      {
+        "name": "portal_enter",
+        "path": "res://assets/sounds/portal_enter.wav",
+        "type": "sfx"
+      }
+    ],
+    "music": [
+      {
+        "name": "level_theme",
+        "path": "res://assets/music/level_theme.ogg"
+      },
+      {
+        "name": "boss_theme",
+        "path": "res://assets/music/boss_theme.ogg"
+      }
+    ]
+  },
+  "scripts": []
+}

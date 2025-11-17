@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jump Quest Adventures</title>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d30 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #cccccc;
+        }
+        #gameContainer {
+            text-align: center;
+            padding: 20px;
+        }
+        #gameCanvas {
+            border: 2px solid #ff8800;
+            border-radius: 8px;
+            background: #1a1a1a;
+            box-shadow: 0 4px 20px rgba(255, 136, 0, 0.3);
+            display: block;
+            margin: 20px auto;
+        }
+        h1 {
+            color: #ff8800;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .info {
+            color: #999999;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .controls {
+            margin-top: 15px;
+            color: #cccccc;
+            font-size: 13px;
+        }
+        .score {
+            color: #4ade80;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>🎮 Jump Quest Adventures</h1>
+        <div class="info">A classic 2D platformer where players navigate through challenging levels by jumping between platfor</div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="score">Score: <span id="score">0</span></div>
+        <div class="controls">
+            Use W/S to move paddle | Click to select (Puzzle)
+        </div>
+        <div id="status" style="margin-top: 10px; color: #4ade80; font-size: 12px;">Game loaded successfully!</div>
+    </div>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreElement = document.getElementById('score');
+        
+        // Game state
+        let score = 0;
+        const canvasWidth = 800;
+        const canvasHeight = 600;
+        
+        
+        // Pong Game
+        let paddle1 = { x: 20, y: 250, width: 10, height: 100, speed: 5 };
+        let paddle2 = { x: 770, y: 250, width: 10, height: 100, speed: 3 };
+        let ball = { x: 400, y: 300, radius: 10, velocityX: 4, velocityY: 4 };
+        let keys = {};
+        let score1 = 0;
+        let score2 = 0;
+        
+        document.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+        });
+        
+        document.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+        
+        function update() {
+            // Move paddle 1
+            if (keys['w'] && paddle1.y > 0) paddle1.y -= paddle1.speed;
+            if (keys['s'] && paddle1.y + paddle1.height < canvas.height) paddle1.y += paddle1.speed;
+            
+            // AI paddle 2
+            if (ball.y < paddle2.y + paddle2.height / 2 && paddle2.y > 0) {
+                paddle2.y -= paddle2.speed;
+            } else if (ball.y > paddle2.y + paddle2.height / 2 && paddle2.y + paddle2.height < canvas.height) {
+                paddle2.y += paddle2.speed;
+            }
+            
+            // Move ball
+            ball.x += ball.velocityX;
+            ball.y += ball.velocityY;
+            
+            // Ball collision with paddles
+            if (ball.x - ball.radius < paddle1.x + paddle1.width &&
+                ball.y > paddle1.y && ball.y < paddle1.y + paddle1.height) {
+                ball.velocityX = Math.abs(ball.velocityX);
+            }
+            
+            if (ball.x + ball.radius > paddle2.x &&
+                ball.y > paddle2.y && ball.y < paddle2.y + paddle2.height) {
+                ball.velocityX = -Math.abs(ball.velocityX);
+            }
+            
+            // Ball collision with walls
+            if (ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height) {
+                ball.velocityY = -ball.velocityY;
+            }
+            
+            // Score
+            if (ball.x < 0) {
+                score2++;
+                ball.x = 400;
+                ball.y = 300;
+                ball.velocityX = 4;
+                ball.velocityY = 4;
+            }
+            if (ball.x > canvas.width) {
+                score1++;
+                ball.x = 400;
+                ball.y = 300;
+                ball.velocityX = -4;
+                ball.velocityY = 4;
+            }
+            
+            score = score1;
+            scoreElement.textContent = score1 + ' - ' + score2;
+        }
+        
+        function render() {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw paddles
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(paddle1.x, paddle1.y, paddle1.width, paddle1.height);
+            ctx.fillRect(paddle2.x, paddle2.y, paddle2.width, paddle2.height);
+            
+            // Draw ball
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw center line
+            ctx.strokeStyle = '#ffffff';
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+        
+        function gameLoop() {
+            update();
+            render();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        gameLoop();
+    
+        
+        console.log('🎮 Applaa game preview loaded successfully! Type: pong');
+    </script>
+</body>
+</html>
